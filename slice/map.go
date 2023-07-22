@@ -16,7 +16,7 @@ package slice
 
 // Map 对src中的每个元素执行 m 操作,并返回一个新的切片
 func Map[Src any, Dst any](src []Src, m func(index int, src Src) Dst) []Dst {
-	ret := make([]Dst, 0, len(src))
+	ret := make([]Dst, len(src))
 	for i, s := range src {
 		ret[i] = m(i, s)
 	}

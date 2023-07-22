@@ -15,47 +15,42 @@
 package slice
 
 import (
+	"github.com/rtmzk/toolkit/internal/errs"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
-func TestUnionSet(t *testing.T) {
-	tests := []struct {
-		name string
-		src  []int
-		dst  []int
-		want []int
+func TestDelete(t *testing.T) {
+	// Delete 主要依赖于 internal/slice.Delete 来保证正确性
+	testCases := []struct {
+		name      string
+		slice     []int
+		index     int
+		wantSlice []int
+		wantErr   error
 	}{
 		{
-			src:  []int{1, 2, 3},
-			dst:  []int{4, 5, 6, 1},
-			want: []int{1, 2, 3, 4, 5, 6},
-			name: "not empty",
+			name:      "index 0",
+			slice:     []int{123, 100},
+			index:     0,
+			wantSlice: []int{100},
 		},
 		{
-			src:  []int{},
-			dst:  []int{1, 3},
-			want: []int{1, 3},
-			name: "src is empty",
-		},
-		{
-
-			src:  []int{1, 3},
-			dst:  []int{},
-			want: []int{1, 3},
-			name: "dst is empty",
-		},
-		{
-			src:  []int{},
-			dst:  []int{},
-			want: []int{},
-			name: "src and dst are empty",
+			name:    "index -1",
+			slice:   []int{123, 100},
+			index:   -1,
+			wantErr: errs.NewErrIndexOutOfRange(2, -1),
 		},
 	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			res := UnionSet[int](tt.src, tt.dst)
-			assert.ElementsMatch(t, tt.want, res)
+
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			res, err := Delete(tc.slice, tc.index)
+			assert.Equal(t, tc.wantErr, err)
+			if err != nil {
+				return
+			}
+			assert.Equal(t, tc.wantSlice, res)
 		})
 	}
 }
