@@ -1,5 +1,4 @@
 # toolkit
---
 [![github action](https://github.com/rtmzk/toolkit/actions/workflows/go.yaml/badge.svg)](https://github.com/rtmzk/toolkit)
 [![codecov](https://codecov.io/gh/rtmzk/toolkit/branch/main/graph/badge.svg)](https://github.com/rtmzk/toolkit)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
